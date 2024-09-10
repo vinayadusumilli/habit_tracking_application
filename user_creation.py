@@ -1,24 +1,29 @@
 import os
+from typing import Final
 
 import requests
 from dotenv import load_dotenv  # pip install python-dotenv
 
 load_dotenv()
 
+API_ENDPOINT: str = "https://pixe.la/v1/users"
+TOKEN: Final[str] = os.getenv("MY_TOKEN")
+USERNAME: Final[str] = os.getenv("MY_USERNAME")
 
-# Creating Pixela User Account
+
 class UserCreation:
+    """Creating Pixela User Account"""
+
     def __init__(self):
-        self.API_ENDPOINT: str = "https://pixe.la/v1/users"
         self.parameters = {
-            "token": os.getenv("MY_TOKEN"),
-            "username": os.getenv("MY_USERNAME"),
+            "token": TOKEN,
+            "username": USERNAME,
             "agreeTermsOfService": "yes",
             "notMinor": "yes",
 
         }
 
-    # https post method to create user account
     def create_user(self):
-        response = requests.post(self.API_ENDPOINT, json=self.parameters)
+        """ https post method to create user account"""
+        response = requests.post(API_ENDPOINT, json=self.parameters)
         print(response.text)
